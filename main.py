@@ -73,6 +73,22 @@ def main():
     print(f"Renaming {old_path} → {new_path}")
     shutil.move(old_path, new_path)
 
+    # Remove old Docker volume
+    try:
+        if not args.force:
+            if confirm(f"Remove Docker volume '{old_vol}' from Docker?" ):
+                client.volumes.get(old_vol).remove()
+                print(f"Removed Docker volume '{old_vol}'.")
+            else:
+                print(f"Skipped removing Docker volume '{old_vol}'.")
+        else:
+            client.volumes.get(old_vol).remove()
+            print(f"Removed Docker volume '{old_vol}'.")
+    except docker.errors.NotFound:
+        print(f"Docker volume '{old_vol}' not found.")
+    except Exception as e:
+        print(f"Error removing Docker volume '{old_vol}': {e}", file=sys.stderr)
+
     # Handle _data symlink: rename target folder and update link
     data_link = os.path.join(new_path, '_data')
     if os.path.islink(data_link):
