@@ -1,37 +1,103 @@
-# Docker Volume Renamer
+# 🚀 Docker Volume Renamer
 [![GitHub Sponsors](https://img.shields.io/badge/Sponsor-GitHub%20Sponsors-blue?logo=github)](https://github.com/sponsors/kevinveenbirkenbach) [![Patreon](https://img.shields.io/badge/Support-Patreon-orange?logo=patreon)](https://www.patreon.com/c/kevinveenbirkenbach) [![Buy Me a Coffee](https://img.shields.io/badge/Buy%20me%20a%20Coffee-Funding-yellow?logo=buymeacoffee)](https://buymeacoffee.com/kevinveenbirkenbach) [![PayPal](https://img.shields.io/badge/Donate-PayPal-blue?logo=paypal)](https://s.veen.world/paypaldonate)
 
+A simple Python script to rename Docker volume directories and automatically stop/restart affected containers.
 
-This tool is a Bash script designed to facilitate the renaming of Docker volumes. It automates the process of creating a new volume, copying data from the existing volume to the new one, and then removing the old volume.
+---
 
-## Created with ChatGPT
+## 📋 Contents
 
-The creation of this tool was assisted by ChatGPT, leveraging its AI capabilities to generate the necessary Bash scripts and instructions. The conversation is available [here](https://chat.openai.com/share/d011e8f1-b986-483e-b53d-d8ad26518f3d).
+- [Features](#-features)
+- [Prerequisites](#-prerequisites)
+- [Installation](#-installation)
+- [Usage](#-usage)
+- [Help & Support](#-help--support)
+- [Author](#-author)
+- [License](#-license)
 
-## Author
+---
 
-Kevin Veen-Birkenbach  
-Email: kevin@veen.world  
-Website: [https://www.veen.world/](https://www.veen.world/)
+## ✨ Features
 
-## Usage
+- Detects containers using the specified Docker volume
+- Stops all affected containers (optional confirmation)
+- Renames the volume directory under `/var/lib/docker/volumes/`
+- Updates the `_data` symlink if present
+- Restarts any containers that were running before the rename
+- Supports `-f`/`--force` flag to skip confirmations
 
-To use this tool, simply execute the Bash script with the old and new volume names as arguments:
+---
+
+## 🛠️ Prerequisites
+
+- Python 3.6+
+- Docker Engine
+- Access to `/var/lib/docker/volumes/` (usually requires root)
+- [Docker SDK for Python](https://pypi.org/project/docker/)
+
+---
+
+## 📥 Installation
+
+This project is installable via Kevin’s Package Manager:
 
 ```bash
-./rename_docker_volume.sh old_volume_name new_volume_name
+pkgmgr install dovore
 ```
 
-Ensure you have a backup of your data before running this script to avoid data loss.
+> Replace `dovore` with the latest package name if necessary.
 
-## License
+---
 
-This repository is under the GNU AFFERO GENERAL PUBLIC LICENSE, Version 3, dated 19 November 2007. Please see the `LICENSE` file for the full text of the license.
+## 🏃‍♂️ Usage
 
-## Contributions
+After installation, run the command:
 
-Contributions are welcome. Please feel free to submit pull requests or create issues for any bugs or enhancements.
+```bash
+dovore <old-volume-name> <new-volume-name> [--force]
+```
 
-## Disclaimer
+- `<old-volume-name>`: the current name of the Docker volume folder
+- `<new-volume-name>`: the desired new name for the volume folder
+- `--force` or `-f`: skip all yes/no confirmation prompts
 
-This tool is provided "as is", without warranty of any kind. Use at your own risk.
+### Examples
+
+Rename volume interactively:
+
+```bash
+sudo dovore friendica_data friendica_data_new
+```
+
+Rename without prompts:
+
+```bash
+sudo dovore -f friendica_data friendica_data_new
+```
+
+---
+
+## ❓ Help & Support
+
+Once installed, you can view detailed help with:
+
+```bash
+dovore --help
+```
+
+For additional support, visit the repo or contact the author.
+
+---
+
+## 👤 Author
+
+**Kevin Veen-Birkenbach**  
+Website: [veen.world](https://www.veen.world)
+GitHub: [kevinveenbirkenbach](https://github.com/kevinveenbirkenbach)
+Repo: [docker-volume-renamer](https://github.com/kevinveenbirkenbach/docker-volume-renamer)
+
+---
+
+## 📄 License
+
+This project is licensed under the **GNU AFFERO GENERAL PUBLIC LICENSE V3**. See the [LICENSE](LICENSE) file for details.
